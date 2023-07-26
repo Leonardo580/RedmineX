@@ -1,0 +1,22 @@
+<h2>Reports</h2>
+<table class="list">
+  <thead>
+  <tr>
+    <th>member</th>
+    <th>issue#</th>
+    <th>has failed to respond</th>
+    <th>has failed to fix</th>
+  </tr>
+  </thead>
+<% @reports.each do |report| %>
+<tr>
+  <td>ff</td>
+  <td>ff</td>
+  <td><%= report.failed_to_res%></td>
+  <td><%= report.failed_to_fix%></td>
+  <td></td>
+</tr>
+<% end %>
+
+
+</table>
