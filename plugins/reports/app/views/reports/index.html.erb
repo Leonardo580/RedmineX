@@ -11,10 +11,10 @@
 <% @reports.each do |report| %>
 <tr>
   <td>ff</td>
-  <td>ff</td>
+  <td>  <%= link_to (report.issue.subject.strip+"#"+report.issue.id.to_s), "/issues" %></td>
   <td><%= report.failed_to_res%></td>
   <td><%= report.failed_to_fix%></td>
-  <td></td>
+
 </tr>
 <% end %>
 

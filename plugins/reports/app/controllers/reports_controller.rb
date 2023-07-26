@@ -5,5 +5,6 @@ class ReportsController < ApplicationController
   end
 
   def notif
+
   end
 end
