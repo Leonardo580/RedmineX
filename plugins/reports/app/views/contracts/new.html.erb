@@ -1,0 +1,6 @@
+<%= title l(:label_contract_new) %>
+
+<%= labelled_form_for :contract,@contracts, url: contracts_path(project_id: params["project_id"])  do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag l(:button_create) %>
+<% end %>

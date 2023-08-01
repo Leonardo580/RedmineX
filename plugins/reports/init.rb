@@ -1,3 +1,4 @@
+require 'redmine'
 Redmine::Plugin.register :reports do
   name 'Reports plugin'
   author 'Author name'
@@ -8,3 +9,4 @@ Redmine::Plugin.register :reports do
   menu :application_menu, :reports, { :controller => 'reports', :action => 'index' }, :caption => 'Reports'
 
 end
+require_dependency 'reports/hooks'

@@ -1,0 +1,11 @@
+  <div class="box tabular">
+    <!--[form:project]-->
+
+    <p><%= f.number_field :low, :required => true, :size => 60 %></p>
+    <p><%= f.number_field :normal, :required => true, :size => 60 %></p>
+    <p><%= f.number_field :high, :required => true, :size => 60 %></p>
+    <p><%= f.number_field :urgent, :required => true, :size => 60 %></p>
+    <p><%= f.number_field :immediate, :required => true, :size => 60 %></p>
+        <% f.hidden_field :project_id, value: params["project_id"] %>
+
+  </div>

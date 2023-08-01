@@ -2,21 +2,25 @@
 <table class="list">
   <thead>
   <tr>
-    <th>member</th>
+    <th>Assigned to</th>
     <th>issue#</th>
     <th>has failed to respond</th>
     <th>has failed to fix</th>
   </tr>
   </thead>
-<% @reports.each do |report| %>
-<tr>
-  <td>ff</td>
-  <td>  <%= link_to (report.issue.subject.strip+"#"+report.issue.id.to_s), "/issues" %></td>
-  <td><%= report.failed_to_res%></td>
-  <td><%= report.failed_to_fix%></td>
-
-</tr>
-<% end %>
+  <% @reports.each do |report| %>
+    <tr>
+      <% id = report.issue.assigned_to_id %>
+      <% if id %>
+        <td><%=  User.find(id) %></td>
+      <% else %>
+        <td><i>Waiting to be assigned</i></td>
+      <% end %>
+      <td>  <%= link_to (report.issue.subject.strip + "#" + report.issue.id.to_s), "/issues" %></td>
+      <td><%= report.failed_to_res %></td>
+      <td><%= report.failed_to_fix %></td>
+    </tr>
+  <% end %>
 
 
 </table>

@@ -639,6 +639,9 @@ fr:
   label_auth_source_plural: Modes d'authentification
   label_subproject_plural: Sous-projets
   label_subproject_new: Nouveau sous-projet
+  label_contract_new: Nouveau contract de maintenance
+  label_contract_index: Contrats de maintenance
+  label_contract_delete: Supprimer le contrat
   label_and_its_subprojects: "%{value} et ses sous-projets"
   label_min_max_length: Longueurs mini - maxi
   label_list: Liste
