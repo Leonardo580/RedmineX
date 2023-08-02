@@ -88,7 +88,7 @@ else
 end
 
 group :development do
-  gem 'listen', '~> 3.3'
+  gem 'listen', '~> 3.8'
   gem "yard"
 end
 
