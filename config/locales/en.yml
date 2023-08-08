@@ -683,6 +683,7 @@ en:
   label_contract_index: current maintenance contract
   label_contract_delete: Delete maintenance contract
   contract_already_exists: Contract already exists for this project
+  label_rlog: Revision log
   label_and_its_subprojects: "%{value} and its subprojects"
   label_min_max_length: Min - Max length
   label_list: List

@@ -165,7 +165,7 @@ module Redmine
           path_with_project_locale = scm_iconv(@path_encoding, 'UTF-8', path_with_project_utf8)
           logger.debug "<cvs> revisions path:" +
               "'#{path}',identifier_from #{identifier_from}, identifier_to #{identifier_to}"
-          cmd_args = %w|-q rlog|
+          cmd_args = %w|-q rlogs|
           cmd_args << "-d" << ">#{time_to_cvstime_rlog(identifier_from)}" if identifier_from
           cmd_args << path_with_project_utf8
           scm_cmd(*cmd_args) do |io|

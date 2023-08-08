@@ -1,0 +1,41 @@
+<%= title l(:label_rlog) %>
+<table class="list">
+  <thead>
+  <tr>
+    <th>Issue</th>
+    <th>Assign to</th>
+    <th>status</th>
+    <th>duration</th>
+    <th>violate the contract</th>
+  </tr>
+  </thead>
+  <% @rlogs.each do |rlog| %>
+    <tr>
+      <% rlog.journal  %>
+      <td ><%= link_to rlog.journal.issue, issue_path(rlog.journal.issue) %></td>
+      <% if rlog.journal.issue.assigned_to.present? %>
+      <td><%= link_to rlog.journal.issue.assigned_to, user_path(rlog.journal.issue.assigned_to) %></td>
+        <% else %>
+      <td><i>waiting to be assigned</i></td>
+        <% end  %>
+      <%  journals = rlog.journal.issue.journals %>
+      <% journals.each do |journal| %>
+
+        <% if journal.details.any? %>
+          <% visible_details =journal.visible_details %>
+          <% details_to_strings(visible_details).each do |string| %>
+            <td>
+              <%= string %>
+            </td>
+
+          <% end %>
+          <td><%=     get_duration visible_details %> min</td>
+
+        <% end %>
+      <% end %>
+      <td><%= rlog.violated ? "yes" : "no" %></td>
+    </tr>
+  <% end %>
+
+
+</table>

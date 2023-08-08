@@ -6,7 +6,7 @@ Redmine::Plugin.register :reports do
   version '0.0.1'
   url 'http://example.com/path/to/plugin'
   author_url 'http://example.com/about'
-  menu :application_menu, :reports, { :controller => 'reports', :action => 'index' }, :caption => 'Reports'
+  menu :application_menu, :reports, { :controller => 'rlogs', :action => 'index' }, :caption => 'Reports'
 
 end
 require_dependency 'reports/hooks'

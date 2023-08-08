@@ -643,6 +643,7 @@ fr:
   label_contract_index: Contrats de maintenance
   label_contract_delete: Supprimer le contrat
   contract_already_exists: Un contrat existe déjà pour ce projet
+  label_rlog: Révisions
   label_and_its_subprojects: "%{value} et ses sous-projets"
   label_min_max_length: Longueurs mini - maxi
   label_list: Liste
