@@ -10,16 +10,18 @@
   </tr>
   </thead>
   <% @rlogs.each do |rlog| %>
+    <%  journals = rlog.journal.issue.journals%>
+    <% journals.each do |journal| %>
     <tr>
       <% rlog.journal  %>
       <td ><%= link_to rlog.journal.issue, issue_path(rlog.journal.issue) %></td>
+      <%= rlog.journal.issue.assigned_to.present? %>
       <% if rlog.journal.issue.assigned_to.present? %>
       <td><%= link_to rlog.journal.issue.assigned_to, user_path(rlog.journal.issue.assigned_to) %></td>
         <% else %>
       <td><i>waiting to be assigned</i></td>
         <% end  %>
-      <%  journals = rlog.journal.issue.journals %>
-      <% journals.each do |journal| %>
+
 
         <% if journal.details.any? %>
           <% visible_details =journal.visible_details %>
@@ -29,12 +31,13 @@
             </td>
 
           <% end %>
-          <td><%=     get_duration visible_details %> min</td>
+          <td><%=     get_duration visible_details, rlog %> min</td>
 
         <% end %>
-      <% end %>
+
       <td><%= rlog.violated ? "yes" : "no" %></td>
     </tr>
+    <% end %>
   <% end %>
 
 

@@ -1,1 +1,7 @@
-<h2>ContractsController#index</h2>
+<%= title((l(:label_contract_index)+'s')) %>
+<ul class="rlog-list">
+  <% @contracts.each do |contract| %>
+    <li class="rlog-item">
+      <span class="project-name"><%= link_to(contract.project, rlog_path(contract)) %></span>
+  <% end %>
+</ul>
