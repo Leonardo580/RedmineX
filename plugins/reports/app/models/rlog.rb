@@ -1,4 +1,4 @@
 class Rlog < ActiveRecord::Base
   belongs_to :contract
-  belongs_to :journal
+  belongs_to :issue
 end

@@ -10,14 +10,12 @@
   </tr>
   </thead>
   <% @rlogs.each do |rlog| %>
-    <%  journals = rlog.journal.issue.journals%>
+    <%  journals = rlog.issue.journals.select {|i| JournalDetail.joins(:journal).where(journals: i, prop_key: "status_id").present?}  %>
     <% journals.each do |journal| %>
     <tr>
-      <% rlog.journal  %>
-      <td ><%= link_to rlog.journal.issue, issue_path(rlog.journal.issue) %></td>
-      <%= rlog.journal.issue.assigned_to.present? %>
-      <% if rlog.journal.issue.assigned_to.present? %>
-      <td><%= link_to rlog.journal.issue.assigned_to, user_path(rlog.journal.issue.assigned_to) %></td>
+      <td ><%= link_to rlog.issue, issue_path(rlog.issue) %></td>
+      <% if rlog.issue.assigned_to.present? %>
+      <td><%= link_to rlog.issue.assigned_to, user_path(rlog.issue.assigned_to) %></td>
         <% else %>
       <td><i>waiting to be assigned</i></td>
         <% end  %>

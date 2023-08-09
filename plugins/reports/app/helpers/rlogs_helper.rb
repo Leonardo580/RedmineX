@@ -1,7 +1,5 @@
 module RlogsHelper
-
-
-
+  include IssuesHelper
   
   def show_rlog
     tabs = []
@@ -20,14 +18,15 @@ module RlogsHelper
       if detail.value == "2"
         j = Journal.find(detail.journal_id)
         duration = (j.created_on.to_i - j.issue.created_on.to_i) / 60
-        rlog.violated = violated?(rlog, duration, rlog.journal.issue.priority.to_s)
+        rlog.violated = violated?(rlog, duration, rlog.issue.priority.to_s)
       elsif detail.value == "3"
         j = Journal.find(detail.journal_id)
         j2= Journal.find(detail.journal_id - 1)
         duration = (j.created_on.to_i - j2.created_on.to_i) / 60
-        rlog.violated = violated?(rlog, duration, rlog.journal.issue.priority.to_s)
+        rlog.violated = violated?(rlog, duration, rlog.issue.priority.to_s)
 
       end
+      rlog.save
     end
     duration
   end
