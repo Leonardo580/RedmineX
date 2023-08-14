@@ -4,7 +4,6 @@
   <%= render_project_action_links %>
 
 </div>
-
 <h2><%= @query.new_record? ? l(:label_project_plural) : @query.name %></h2>
 
 <%= form_tag(projects_path(@project, nil), :method => :get, :id => 'query_form') do %>
@@ -29,7 +28,6 @@
 <% content_for :sidebar do %>
   <%= render :partial => 'projects/sidebar' %>
 <% end %>
-
 <% other_formats_links do |f| %>
   <%= f.link_to 'Atom', :url => {:key => User.current.atom_key} %>
   <% if @query.display_type == 'list' %>

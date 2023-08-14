@@ -29,7 +29,12 @@
             </td>
 
           <% end %>
-          <td><%=     get_duration visible_details, rlog %> min</td>
+          <%     duration=get_duration visible_details, rlog %>
+            <% if duration>59 %>
+          <td> <%= min_to_hours duration %></td>
+          <% else %>
+        <td> <%= duration %> min</td>
+          <% end  %>
 
         <% end %>
 

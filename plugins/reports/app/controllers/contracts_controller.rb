@@ -35,6 +35,9 @@ class ContractsController < ApplicationController
       end
     end
   end
+  def show
+    @contracts = Contract.find_by project_id: params[:project_id]
+  end
 
   def edit
     project = Project.find(params[:project_id])

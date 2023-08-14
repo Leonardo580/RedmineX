@@ -1,0 +1,4 @@
+
+<% if @contracts.present? %>
+  <%= link_to l(:label_contract_index), edit_contract_path(project_id: @project) %>
+<% end %>

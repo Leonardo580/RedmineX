@@ -21,7 +21,9 @@ module RlogsHelper
         rlog.violated = violated?(rlog, duration, rlog.issue.priority.to_s)
       elsif detail.value == "3"
         j = Journal.find(detail.journal_id)
-        j2= Journal.find(detail.journal_id - 1)
+        j2=j.journalized.journals.sort {|journal| journal.created_on}[-1]
+        puts "444#{j.journalized.journals.inspect}"
+        # j2= Journal.find(detail.journal_id - 1)
         duration = (j.created_on.to_i - j2.created_on.to_i) / 60
         rlog.violated = violated?(rlog, duration, rlog.issue.priority.to_s)
 
@@ -35,4 +37,10 @@ module RlogsHelper
     status.downcase!
     violate[status] < duration
   end
+  def min_to_hours(min)
+    hours=min / 60
+    rest=min % 60
+    "#{hours}h #{rest}min"
+  end
+
 end
