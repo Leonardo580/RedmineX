@@ -76,6 +76,6 @@ class ContractsController < ApplicationController
   private
 
   def contract_params
-    params.require(:contract).permit(:low, :normal, :high, :urgent, :immediate)
+    params.require(:contract).permit(:low, :normal, :high, :urgent, :immediate, :low_progress, :normal_progress, :high_progress, :urgent_progress, :immediate_progress)
   end
 end

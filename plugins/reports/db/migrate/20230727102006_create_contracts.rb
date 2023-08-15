@@ -7,7 +7,8 @@ class CreateContracts < ActiveRecord::Migration[6.1]
       t.integer :high
       t.integer :urgent
       t.integer :immediate
+
     end
-    drop_table :reports
+
   end
 end

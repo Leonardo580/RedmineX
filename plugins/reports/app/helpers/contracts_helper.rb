@@ -15,9 +15,11 @@ module ContractsHelper
       else
         s = link_to_project(project, {}, :class => classes.uniq.join(' '))
       end
+=begin
       if project.description.present?
         s << content_tag('div', textilizable(project.short_description, :project => project), :class => 'wiki description')
       end
+=end
       s
     end
   end

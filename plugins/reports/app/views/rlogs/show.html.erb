@@ -1,18 +1,35 @@
 <%= title l(:label_rlog) %>
+<style>
+  thead th {
+      cursor: pointer;
+  }
+</style>
+<%= form_tag({controller: "rlogs", action: "show"}, method: :get) do   %>
+<%= label_tag 'issue', "filter by issue" %>
+  <%= select_tag "issue", options_from_collection_for_select(@rlogs_tmp, "issue_id", "issue"), include_blank: true %>
+<%#= label_tag 'assignee', "filter by assignee" %>
+  <%#= select_tag "assignee", options_from_collection_for_select(@rlogs, "assigned_to", "issue" ), include_blank: true do |rlog| %>
+    <%#= rlog.issue.assigned_to.present? %>
+  <%#end %>
+  <%= label_tag :violated, "filter by contract breach"%>
+  <%= select_tag :violated, options_for_select(%w[yes no]), include_blank: true %>
+  <%= submit_tag  l(:button_filter)%>
+<% end %>
 <table class="list">
   <thead>
   <tr>
-    <th>Issue</th>
-    <th>Assign to</th>
-    <th>status</th>
-    <th>duration</th>
-    <th>violate the contract</th>
+    <th data-column="issue">Issue</th>
+    <th data-column="assign">Assign to</th>
+    <th data-column="status">status</th>
+    <th data-column="duration">duration</th>
+    <th data-column="violate">violate the contract</th>
   </tr>
   </thead>
   <% @rlogs.each do |rlog| %>
     <%  journals = rlog.issue.journals.select {|i| JournalDetail.joins(:journal).where(journals: i, prop_key: "status_id").present?}  %>
     <% journals.each do |journal| %>
-    <tr>
+
+    <tr class="rows">
       <td ><%= link_to rlog.issue, issue_path(rlog.issue) %></td>
       <% if rlog.issue.assigned_to.present? %>
       <td><%= link_to rlog.issue.assigned_to, user_path(rlog.issue.assigned_to) %></td>
@@ -38,10 +55,68 @@
 
         <% end %>
 
-      <td><%= rlog.violated ? "yes" : "no" %></td>
+      <%if rlog.violated  %>
+
+        <td>yes</td>
+
+      <% else  %>
+        <td>no</td>
+        <% end  %>
     </tr>
     <% end %>
   <% end %>
 
 
 </table>
+<%= will_paginate @rlogs %>
+<script>
+  function make_it_red() {
+      let rows = document.querySelectorAll(".rows")
+      for (let i = 0; i < rows.length; i++) {
+          console.log(rows.item(i).lastElementChild.textContent)
+          if (rows.item(i).lastElementChild.textContent === "yes")
+              rows.item(i).style.cssText = "background-color: rgba(255, 0, 0, 0.4);"
+      }
+  }
+  function sort() {
+
+          const table = document.querySelector('.list');
+          const headerRow = table.querySelector('thead tr');
+          const rows = Array.from(table.querySelectorAll('.rows'));
+          let sortOrders = {};
+
+          headerRow.addEventListener('click', function(event) {
+          if (event.target.tagName === 'TH' && event.target.hasAttribute('data-column')) {
+          const column = event.target.getAttribute('data-column');
+          const columnIndex = Array.from(headerRow.children).indexOf(event.target);
+
+          sortOrders[column] = sortOrders[column] === 'asc' ? 'desc' : 'asc';
+
+          rows.sort((rowA, rowB) => {
+          const valueA = rowA.children[columnIndex].textContent;
+          const valueB = rowB.children[columnIndex].textContent;
+
+          if (column === 'duration') {
+          return sortOrders[column] === 'asc' ? parseInt(valueA) - parseInt(valueB) : parseInt(valueB) - parseInt(valueA);
+      } else {
+          return sortOrders[column] === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      }
+      });
+
+          rows.forEach(row => table.tBodies[0].appendChild(row));
+      }
+      });
+
+
+
+
+
+}
+  document.addEventListener("DOMContentLoaded", function (){
+      make_it_red()
+      sort()
+  })
+
+
+
+</script>
