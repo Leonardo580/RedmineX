@@ -1,20 +1,27 @@
 <%= title l(:label_rlog) %>
 <style>
-  thead th {
-      cursor: pointer;
-  }
+    thead th {
+        cursor: pointer;
+    }
 </style>
-<%= form_tag({controller: "rlogs", action: "show"}, method: :get) do   %>
-<%= label_tag 'issue', "filter by issue" %>
-  <%= select_tag "issue", options_from_collection_for_select(@rlogs_tmp, "issue_id", "issue"), include_blank: true %>
-<%#= label_tag 'assignee', "filter by assignee" %>
-  <%#= select_tag "assignee", options_from_collection_for_select(@rlogs, "assigned_to", "issue" ), include_blank: true do |rlog| %>
-    <%#= rlog.issue.assigned_to.present? %>
-  <%#end %>
-  <%= label_tag :violated, "filter by contract breach"%>
-  <%= select_tag :violated, options_for_select(%w[yes no]), include_blank: true %>
-  <%= submit_tag  l(:button_filter)%>
-<% end %>
+<fieldset class="collapsible">
+  <%= form_tag({ controller: "rlogs", action: "show" }, method: :get) do %>
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= label_tag 'issue', "Filter by issue" %>
+      <%= select_tag "issue", options_from_collection_for_select(@rlogs_tmp, "issue_id", "issue"), include_blank: true %>
+    </div>
+
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= label_tag :violated, "Filter by contract breach" %>
+      <%= select_tag :violated, options_for_select(%w[yes no]), include_blank: true %>
+    </div>
+
+    <div class="form-group">
+      <%= submit_tag l(:button_filter), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</fieldset>
+<hr>
 <table class="list">
   <thead>
   <tr>
@@ -26,97 +33,96 @@
   </tr>
   </thead>
   <% @rlogs.each do |rlog| %>
-    <%  journals = rlog.issue.journals.select {|i| JournalDetail.joins(:journal).where(journals: i, prop_key: "status_id").present?}  %>
+    <% journals = rlog.issue.journals.select { |i| JournalDetail.joins(:journal).where(journals: i, prop_key: "status_id").present? } %>
     <% journals.each do |journal| %>
 
-    <tr class="rows">
-      <td ><%= link_to rlog.issue, issue_path(rlog.issue) %></td>
-      <% if rlog.issue.assigned_to.present? %>
-      <td><%= link_to rlog.issue.assigned_to, user_path(rlog.issue.assigned_to) %></td>
+      <tr class="rows">
+        <td><%= link_to rlog.issue, issue_path(rlog.issue) %></td>
+        <% if rlog.issue.assigned_to.present? %>
+          <td><%= link_to rlog.issue.assigned_to, user_path(rlog.issue.assigned_to) %></td>
         <% else %>
-      <td><i>waiting to be assigned</i></td>
-        <% end  %>
+          <td><i>waiting to be assigned</i></td>
+        <% end %>
 
 
         <% if journal.details.any? %>
-          <% visible_details =journal.visible_details %>
+          <% visible_details = journal.visible_details %>
           <% details_to_strings(visible_details).each do |string| %>
             <td>
               <%= string %>
             </td>
 
           <% end %>
-          <%     duration=get_duration visible_details, rlog %>
-            <% if duration>59 %>
-          <td> <%= min_to_hours duration %></td>
+          <% duration = get_duration visible_details, rlog %>
+          <% if duration > 59 %>
+            <td> <%= min_to_hours duration %></td>
           <% else %>
-        <td> <%= duration %> min</td>
-          <% end  %>
+            <td> <%= duration %> min</td>
+          <% end %>
 
         <% end %>
 
-      <%if rlog.violated  %>
+        <% if rlog.violated %>
 
-        <td>yes</td>
+          <td>yes</td>
 
-      <% else  %>
-        <td>no</td>
-        <% end  %>
-    </tr>
+        <% else %>
+          <td>no</td>
+        <% end %>
+      </tr>
     <% end %>
   <% end %>
 
 
 </table>
-<%= will_paginate @rlogs %>
+<%#= will_paginate @rlogs %>
+<%= paginate    @rlogs %>
 <script>
-  function make_it_red() {
-      let rows = document.querySelectorAll(".rows")
-      for (let i = 0; i < rows.length; i++) {
-          console.log(rows.item(i).lastElementChild.textContent)
-          if (rows.item(i).lastElementChild.textContent === "yes")
-              rows.item(i).style.cssText = "background-color: rgba(255, 0, 0, 0.4);"
-      }
-  }
-  function sort() {
+    function make_it_red() {
+        let rows = document.querySelectorAll(".rows")
+        for (let i = 0; i < rows.length; i++) {
+            console.log(rows.item(i).lastElementChild.textContent)
+            if (rows.item(i).lastElementChild.textContent === "yes")
+                rows.item(i).style.cssText = "background-color: rgba(255, 0, 0, 0.4);"
+        }
+    }
 
-          const table = document.querySelector('.list');
-          const headerRow = table.querySelector('thead tr');
-          const rows = Array.from(table.querySelectorAll('.rows'));
-          let sortOrders = {};
+    function sort() {
 
-          headerRow.addEventListener('click', function(event) {
-          if (event.target.tagName === 'TH' && event.target.hasAttribute('data-column')) {
-          const column = event.target.getAttribute('data-column');
-          const columnIndex = Array.from(headerRow.children).indexOf(event.target);
+        const table = document.querySelector('.list');
+        const headerRow = table.querySelector('thead tr');
+        const rows = Array.from(table.querySelectorAll('.rows'));
+        let sortOrders = {};
 
-          sortOrders[column] = sortOrders[column] === 'asc' ? 'desc' : 'asc';
+        headerRow.addEventListener('click', function (event) {
+            if (event.target.tagName === 'TH' && event.target.hasAttribute('data-column')) {
+                const column = event.target.getAttribute('data-column');
+                const columnIndex = Array.from(headerRow.children).indexOf(event.target);
 
-          rows.sort((rowA, rowB) => {
-          const valueA = rowA.children[columnIndex].textContent;
-          const valueB = rowB.children[columnIndex].textContent;
+                sortOrders[column] = sortOrders[column] === 'asc' ? 'desc' : 'asc';
 
-          if (column === 'duration') {
-          return sortOrders[column] === 'asc' ? parseInt(valueA) - parseInt(valueB) : parseInt(valueB) - parseInt(valueA);
-      } else {
-          return sortOrders[column] === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-      }
-      });
+                rows.sort((rowA, rowB) => {
+                    const valueA = rowA.children[columnIndex].textContent;
+                    const valueB = rowB.children[columnIndex].textContent;
 
-          rows.forEach(row => table.tBodies[0].appendChild(row));
-      }
-      });
+                    if (column === 'duration') {
+                        return sortOrders[column] === 'asc' ? parseInt(valueA) - parseInt(valueB) : parseInt(valueB) - parseInt(valueA);
+                    } else {
+                        return sortOrders[column] === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+                    }
+                });
 
-
-
+                rows.forEach(row => table.tBodies[0].appendChild(row));
+            }
+        });
 
 
-}
-  document.addEventListener("DOMContentLoaded", function (){
-      make_it_red()
-      sort()
-  })
+    }
 
+    document.addEventListener("DOMContentLoaded", function () {
+        make_it_red()
+        sort()
+    })
 
 
 </script>

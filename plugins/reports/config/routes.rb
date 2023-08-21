@@ -9,5 +9,8 @@ get 'contracts/:project_id', to: 'contracts#edit'
 post 'contracts/:project_id', to: 'contracts#update'
 delete 'contracts/:project_id', to: 'contracts#destroy'
 
-resources :rlogs
+resources :rlogs do
+  get 'page/:page', action: :show, on: :collection
+end
+
 get 'rlogs', to: 'rlogs#index'

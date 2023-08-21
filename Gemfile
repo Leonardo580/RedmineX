@@ -5,7 +5,7 @@ gem 'bundler', '>= 1.12.0'
 gem 'sidekiq'
 gem 'rails-observers'
 gem 'sidekiq-cron'
-gem 'will_paginate'
+gem 'kaminari'
 gem 'rails', '6.1.7.2'
 gem 'globalid', '~> 0.4.2' if Gem.ruby_version < Gem::Version.new('2.6.0')
 gem 'rouge', '~> 3.28.0'

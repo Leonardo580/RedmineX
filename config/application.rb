@@ -14,7 +14,7 @@ require 'action_view/railtie'
 require 'action_cable/engine'
 # require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
-
+require 'kaminari'
 Bundler.require(*Rails.groups)
 
 module RedmineApp
@@ -97,6 +97,7 @@ module RedmineApp
       :path => config.relative_url_root || '/',
       :same_site => :lax
     )
+
 
     if File.exist?(File.join(File.dirname(__FILE__), 'additional_environment.rb'))
       instance_eval File.read(File.join(File.dirname(__FILE__), 'additional_environment.rb'))

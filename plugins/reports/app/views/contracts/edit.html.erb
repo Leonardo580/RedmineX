@@ -1,7 +1,9 @@
 <%= labelled_form_for @contracts  do |f| %>
   <%= render :partial => 'form', :locals => { :f => f } %>
+  <% if User.current.admin? %>
   <%= submit_tag l(:button_save) %>
 
   <%= link_to l(:label_contract_delete),
               contract_path(@contracts),:method => :delete,:class => 'icon icon-del' %>
+<% end %>
 <% end %>

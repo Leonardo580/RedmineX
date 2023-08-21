@@ -44,7 +44,13 @@ module RlogsHelper
   def min_to_hours(min)
     hours = min / 60
     rest = min % 60
-    "#{hours}h #{rest}min"
+    s="#{hours}h #{rest}min"
+    if hours>24
+      days=hours/24
+      hours%=24
+      s="#{days}d #{hours}h #{rest}min"
+    end
+
   end
 
   def sort_link_to(contract_id, kw)

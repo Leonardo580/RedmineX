@@ -6,14 +6,14 @@ class RlogsController < ApplicationController
   end
 
   def show
-    @rlogs = Rlog.where(contract_id: params[:id]).paginate(page: params[:page], per_page: 20)
+    @rlogs = Rlog.where(contract_id: params[:id]).page params[:page]
     @rlogs_tmp =@rlogs.deep_dup
     if params[:issue].present?
-      @rlogs=@rlogs.filter { |rlog| rlog.issue.id == params[:issue].to_i }
+      @rlogs=Rlog.where(contract_id: params[:id], issue_id: params[:issue]).page params[:page]
     end
     puts "dsf#{@rlogs.inspect}"
     if params[:violated].present?
-      @rlogs=@rlogs.filter { |rlog| rlog.violated == (params[:violated]=="yes") }
+      @rlogs=Rlog.where(contract_id: params[:id], violated: params[:violated]).page params[:page]
     end
     @rlogs
   end
