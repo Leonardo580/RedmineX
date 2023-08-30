@@ -1,18 +1,24 @@
 <div class="box tabular">
   <!--[form:project]-->
-<% editable = !User.current.admin? %>
+<% not_editable = !User.current.admin? %>
   <div class="splitcontent">
-    <div class="splitcontentleft"><p><%= f.number_field :low, :required => true, :size => 60, readonly: editable %></p>
-      <p><%= f.number_field :normal, :required => true, :size => 60, readonly: editable %></p>
-      <p><%= f.number_field :high, :required => true, :size => 60, readonly: editable %></p>
-      <p><%= f.number_field :urgent, :required => true, :size => 60 , readonly: editable%></p>
-      <p><%= f.number_field :immediate, :required => true, :size => 60 , readonly: editable%></p></div>
+    <div class="splitcontentleft">
+      <p><strong><%= l(:contract_description_1)%>:</strong></p>
+      <br>
+      <p><%= f.number_field :low, :required => true, :size => 60, readonly: not_editable %></p>
+      <p><%= f.number_field :normal, :required => true, :size => 60, readonly: not_editable %></p>
+      <p><%= f.number_field :high, :required => true, :size => 60, readonly: not_editable %></p>
+      <p><%= f.number_field :urgent, :required => true, :size => 60 , readonly: not_editable%></p>
+      <p><%= f.number_field :immediate, :required => true, :size => 60 , readonly: not_editable%></p></div>
 
-    <div class="splitcontentright"><p><%= f.number_field :low_progress, :required => true, :size => 60, readonly: editable %></p>
-      <p><%= f.number_field :normal_progress, :required => true, :size => 60 , readonly: editable%></p>
-      <p><%= f.number_field :high_progress, :required => true, :size => 60, readonly: editable %></p>
-      <p><%= f.number_field :urgent_progress, :required => true, :size => 60, readonly: editable %></p>
-      <p><%= f.number_field :immediate_progress, :required => true, :size => 60, readonly: editable %></p>
+    <div class="splitcontentright">
+      <p><strong><%= l(:contract_description_2)%>:</strong></p>
+      <br>
+      <p><%= f.number_field :low_progress, :required => true, :size => 60, readonly: not_editable %></p>
+      <p><%= f.number_field :normal_progress, :required => true, :size => 60 , readonly: not_editable%></p>
+      <p><%= f.number_field :high_progress, :required => true, :size => 60, readonly: not_editable %></p>
+      <p><%= f.number_field :urgent_progress, :required => true, :size => 60, readonly: not_editable %></p>
+      <p><%= f.number_field :immediate_progress, :required => true, :size => 60, readonly: not_editable %></p>
       <% f.hidden_field :project_id, value: params["project_id"] %></div>
   </div>
 </div>

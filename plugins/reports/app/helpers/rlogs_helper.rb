@@ -53,6 +53,7 @@ module RlogsHelper
 
   end
 
+  #unused function for now
   def sort_link_to(contract_id, kw)
     contract = Contract.find(contract_id)
     if contract.present?

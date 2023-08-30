@@ -683,6 +683,8 @@ en:
   label_contract_index: current maintenance contract
   label_contract_delete: Delete maintenance contract
   contract_already_exists: Contract already exists for this project
+  contract_description_1: defines the time, in minutes, it takes for an issue to change states from 'new' to 'in progress'
+  contract_description_2: defines the time, in minutes, it takes for an issue to change states from 'in progress' to 'resolved'
   label_rlog: Revision log
   label_and_its_subprojects: "%{value} and its subprojects"
   label_min_max_length: Min - Max length

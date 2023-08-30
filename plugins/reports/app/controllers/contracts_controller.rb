@@ -11,14 +11,15 @@ class ContractsController < ApplicationController
 
   def create
     project = Project.find(params[:project_id])
+
     @contracts = Contract.new(contract_params)
     @contracts.project = project
-
-    if Contract.find_by(project: project).present?
+    if Contract.find_by(project: project.id).present?
       respond_to do |format|
         format.html do
           flash[:error] = l(:contract_already_exists)
           redirect_to "/projects"
+          # redirect_to "show_project_path(project)"
         end
       end
 
@@ -51,7 +52,7 @@ class ContractsController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:notice] = l(:notice_successful_update)
-          redirect_to "/projects"
+          redirect_to "/projects/#{@contracts.project.id}"
         end
       end
     else
@@ -68,7 +69,7 @@ class ContractsController < ApplicationController
     respond_to do |format|
       format.html do
         flash[:notice] = l(:notice_successful_delete)
-        redirect_to "/projects"
+        redirect_to "/projects/#{@contracts.project.id}"
       end
     end
   end

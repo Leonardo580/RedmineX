@@ -1,5 +1,4 @@
 
-
 document.addEventListener("DOMContentLoaded", function() {
     const rows = document.getElementsByClassName("priority");
     const color = {

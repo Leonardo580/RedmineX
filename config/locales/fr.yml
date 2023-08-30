@@ -643,6 +643,8 @@ fr:
   label_contract_index: Contrats de maintenance
   label_contract_delete: Supprimer le contrat
   contract_already_exists: Un contrat existe déjà pour ce projet
+  contract_description_1: "Temps nécessaire pour qu'un problème passe de l'état 'Nouveau' à l'état 'En cours'"
+  contract_description_2: "The time required for an issue to transition from the 'In Progress' state to the 'Resolved' state."
   label_rlog: Révisions
   label_and_its_subprojects: "%{value} et ses sous-projets"
   label_min_max_length: Longueurs mini - maxi
