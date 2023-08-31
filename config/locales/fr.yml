@@ -646,6 +646,11 @@ fr:
   contract_description_1: "Temps nécessaire pour qu'un problème passe de l'état 'Nouveau' à l'état 'En cours'"
   contract_description_2: "The time required for an issue to transition from the 'In Progress' state to the 'Resolved' state."
   label_rlog: Révisions
+  issue_col: Demande
+  assigned_to_col: assigné à
+  status_col: Status
+  duration_col: Durée
+  violate_contract_col: Le contrat est violé
   label_and_its_subprojects: "%{value} et ses sous-projets"
   label_min_max_length: Longueurs mini - maxi
   label_list: Liste

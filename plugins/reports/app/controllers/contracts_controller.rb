@@ -1,5 +1,6 @@
 class ContractsController < ApplicationController
-
+  # fetch all users from the database
+  # @return [array<Contracts>] an array of all the contracts
   def index
     @contracts = Contract.all
   end

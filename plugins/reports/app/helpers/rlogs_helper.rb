@@ -13,7 +13,7 @@ module RlogsHelper
 
   end
 
-  def get_duration(visible_details, rlog)
+  def get_duration_and_check_violation(visible_details, rlog)
     duration = 0
     visible_details.each do |detail|
       if detail.value == "2"

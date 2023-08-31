@@ -3,6 +3,11 @@
     thead th {
         cursor: pointer;
     }
+    .pagination-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px; /* Add margin if needed */
+    }
 </style>
 <!--<div class="box">
   <%#= form_tag({ controller: "rlogs", action: "show" }, method: :get) do %>
@@ -12,7 +17,7 @@
 <%# end %>
 </div>-->
 
-<fieldset class="collapsible">
+<div class="box">
   <%= form_tag({ controller: "rlogs", action: "show" }, method: :get) do %>
     <div class="form-group" style="padding-bottom: 10px;">
       <%= label_tag 'issue', "Filter by issue" %>
@@ -30,16 +35,16 @@
       <%= submit_tag l(:button_filter), class: "btn btn-primary" %>
     </div>
   <% end %>
-</fieldset>
+</div>
 <hr>
 <table class="list">
   <thead>
   <tr>
-    <th data-column="issue">Issue</th>
-    <th data-column="assign">Assign to</th>
-    <th data-column="status">Status</th>
-    <th data-column="duration">Duration</th>
-    <th data-column="violate">Violate the contract</th>
+    <th data-column="issue"><%= l(:issue_col) %></th>
+    <th data-column="assign"><%= l(:assigned_to_col) %></th>
+    <th data-column="status"><%= l(:status_col) %></th>
+    <th data-column="duration"><%= l(:duration_col) %></th>
+    <th data-column="violate"><%= l(:violate_contract_col) %></th>
   </tr>
   </thead>
   <% @rlogs.each do |rlog| %>
@@ -64,7 +69,7 @@
               </td>
 
             <% end %>
-            <% duration = get_duration visible_details, rlog %>
+            <% duration = get_duration_and_check_violation visible_details, rlog %>
             <% if duration > 59 %>
               <td> <%= min_to_hours duration %></td>
             <% else %>
@@ -88,7 +93,9 @@
 
         </table>
 <%#= will_paginate @rlogs %>
-        <%= paginate @rlogs %>
+<div class="pagination-container">
+<%= paginate @rlogs %>
+</div>
         <script>
             function make_it_red() {
                 let rows = document.querySelectorAll(".rows")

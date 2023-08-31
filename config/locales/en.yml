@@ -686,6 +686,11 @@ en:
   contract_description_1: defines the time, in minutes, it takes for an issue to change states from 'new' to 'in progress'
   contract_description_2: defines the time, in minutes, it takes for an issue to change states from 'in progress' to 'resolved'
   label_rlog: Revision log
+  issue_col: Issue
+  assigned_to_col: Assigned to
+  status_col: Status
+  duration_col: Duration
+  violate_contract_col: Violate contract
   label_and_its_subprojects: "%{value} and its subprojects"
   label_min_max_length: Min - Max length
   label_list: List
